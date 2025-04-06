@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find a Lawyer</title>
+  <link rel="icon" type="image/x-icon" href="./logo/LegalAssist.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/5598f0038c.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: #f5f5f5;
+    }
+
+    .navbar {
+      background-color: #ffffff;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar h4 {
+      margin: 0 0 0 10px;
+      color: #d043b6;
+    }
+
+    .right-nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav a, .nav p {
+      text-decoration: none;
+      color: #333;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #LawyerBar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    #searchBox {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .searchInput {
+      padding: 12px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 25px 0 0 25px;
+      outline: none;
+    }
+
+    #Search {
+      background-color: #d043b6;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 0 25px 25px 0;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropbtn {
+      background-color: #d043b6;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      min-width: 220px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .dropdown-content button {
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 10px 15px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .dropdown-content button:hover {
+      background-color: #f2f2f2;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    #LawyerList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 30px 40px;
+    }
+
+    .lawyer-card {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .lawyer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .lawyer-card img {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .lawyer-card h3 {
+      margin: 10px 0 5px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .lawyer-card p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .lawyer-card button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #d043b6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="right-nav">
+      <a href="./HomePage.html"><img width="50" src="LegalAssist-Transparent.png" alt="logo" /></a>
+      <h4>Legal Assist</h4>
+    </div>
+    <div class="nav">
+      <a href="./HomePage.html">Home</a>
+      <a href="./lawyer.html">Find A Lawyer</a>
+      <a href="./userBooking.html">My Bookings</a>
+      <p><i class="fa-regular fa-user" style="color: #d043b6"></i> <span id="profile">Profile</span></p>
+      <div id="signup-logout-btn"></div>
+    </div>
+  </div>
+
+  <div id="LawyerBar">
+    <div id="searchBox">
+      <input class="searchInput" type="text" placeholder="Search Lawyer..." id="inputBox">
+      <button id="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Filter By Type</button>
+      <div class="dropdown-content" id="lawyerTypes"></div>
+    </div>
+  </div>
+
+  <div id="LawyerList"></div>
+
+  <script>
+    const lawyerTypes = [
+      "Family Lawyer", "Cyber Lawyer", "Corporate Lawyer", "Civil Lawyer", "Criminal Lawyer", "Tax Lawyer", "Labour Lawyer"
+    ];
+
+    const lawyers = [
+      {
+        name: "Amit Verma",
+        type: "Civil Lawyer",
+        phone: "9876543210",
+        experience: "5 years",
+        rating: "4.3",
+        details: "Specialized in handling civil disputes, contracts, and property cases.",
+        image: "https://randomuser.me/api/portraits/men/32.jpg"
+      },
+      {
+        name: "Rajeev Kapoor",
+        type: "Corporate Lawyer",
+        phone: "9123456780",
+        experience: "8 years",
+        rating: "4.7",
+        details: "Expert in mergers, acquisitions, and business law.",
+        image: "https://randomuser.me/api/portraits/men/45.jpg"
+      },
+      {
+        name: "Anil Kumar",
+        type: "Family Lawyer",
+        phone: "9812345678",
+        experience: "6 years",
+        rating: "4.6",
+        details: "Deals with divorce, custody, and family settlements.",
+        image: "https://randomuser.me/api/portraits/men/28.jpg"
+      },
+      {
+        name: "Ravi Mehra",
+        type: "Cyber Lawyer",
+        phone: "9098765432",
+        experience: "4 years",
+        rating: "4.4",
+        details: "Expert in IT laws and cybercrime handling.",
+        image: "https://randomuser.me/api/portraits/men/40.jpg"
+      },
+      {
+        name: "Neeraj Gupta",
+        type: "Labour Lawyer",
+        phone: "9900123456",
+        experience: "7 years",
+        rating: "4.2",
+        details: "Skilled in worker rights and employment disputes.",
+        image: "https://randomuser.me/api/portraits/men/52.jpg"
+      }
+    ];
+
+    const typeContainer = document.getElementById("lawyerTypes");
+    const listContainer = document.getElementById("LawyerList");
+
+    lawyerTypes.forEach(type => {
+      const btn = document.createElement("button");
+      btn.textContent = type;
+      btn.onclick = () => filterLawyers(type);
+      typeContainer.appendChild(btn);
+    });
+
+    function displayLawyers(list) {
+      listContainer.innerHTML = "";
+      if (list.length === 0) {
+        listContainer.innerHTML = "<p>No lawyers found.</p>";
+        return;
+      }
+      list.forEach(lawyer => {
+        const card = document.createElement("div");
+        card.className = "lawyer-card";
+        card.innerHTML = `
+          <img src="${lawyer.image}" alt="${lawyer.name}">
+          <h3>${lawyer.name}</h3>
+          <p><strong>Type:</strong> ${lawyer.type}</p>
+          <p><strong>Phone:</strong> ${lawyer.phone}</p>
+          <p><strong>Experience:</strong> ${lawyer.experience}</p>
+          <p><strong>Rating:</strong> ⭐ ${lawyer.rating}</p>
+          <p><strong>Details:</strong> ${lawyer.details}</p>
+          <button>Book Appointment</button>
+        `;
+        listContainer.appendChild(card);
+      });
+    }
+
+    function filterLawyers(type) {
+      const filtered = lawyers.filter(lawyer => lawyer.type === type);
+      displayLawyers(filtered);
+    }
+
+    document.getElementById("Search").addEventListener("click", () => {
+      const value = document.getElementById("inputBox").value.toLowerCase();
+      const filtered = lawyers.filter(l => l.name.toLowerCase().includes(value));
+      displayLawyers(filtered);
+    });
+
+    displayLawyers(lawyers); // Initial load
+  </script>
+</body>
+</html>
