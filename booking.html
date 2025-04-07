@@ -92,5 +92,13 @@
     © 2025 LegalConnect. All rights reserved.
   </footer>
   <a href="booking.html" class="btn">Book Appointment</a>
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const lawyerName = params.get("lawyer");
+  if (lawyerName) {
+    document.body.insertAdjacentHTML("afterbegin", `<h2>Booking for ${lawyerName}</h2>`);
+  }
+</script>
+
 </body>
 </html>
