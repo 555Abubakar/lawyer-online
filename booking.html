@@ -148,14 +148,17 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const lawyerName = params.get("lawyer");
+
     if (lawyerName) {
       document.getElementById("booking-message").innerHTML =
         `<div class="booking-header">Booking for <strong>${decodeURIComponent(lawyerName)}</strong></div>`;
+      document.getElementById("booking-form").style.display = "block";
+      document.getElementById("lawyer").value = decodeURIComponent(lawyerName);
     }
 
     document.getElementById("show-form").addEventListener("click", function () {
       const form = document.getElementById("booking-form");
-      form.style.display = form.style.display === "none" ? "block" : "none";
+      form.style.display = "block";
     });
   </script>
 
