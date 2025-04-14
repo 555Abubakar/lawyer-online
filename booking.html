@@ -162,6 +162,10 @@
       button.addEventListener('click', () => {
         const lawyerName = button.getAttribute('data-lawyer');
         lawyerInput.value = lawyerName;
+
+        // Save selected lawyer in localStorage
+        localStorage.setItem("selectedLawyer", JSON.stringify({ name: lawyerName }));
+
         formContainer.scrollIntoView({ behavior: "smooth" });
         formContainer.style.display = 'block';
       });
@@ -183,14 +187,13 @@
       // Optionally, reset the form fields
       this.reset();
     });
+
+    // Optional: Load selected lawyer from localStorage on page load
+    const lawyer = JSON.parse(localStorage.getItem("selectedLawyer"));
+    if (lawyer) {
+      document.getElementById("lawyer").value = lawyer.name;
+    }
   </script>
-<script>
-  const lawyer = JSON.parse(localStorage.getItem("selectedLawyer"));
-  if (lawyer) {
-    document.getElementById("lawyerName").textContent = lawyer.name;
-    // and so on...
-  }
-</script>
 
 </body>
 </html>
