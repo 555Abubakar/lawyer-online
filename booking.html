@@ -62,15 +62,6 @@
       color: white;
     }
 
-    .booking-header {
-      background-color: #fff3cd;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-left: 5px solid #ffc107;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
     #booking-form {
       background-color: white;
       padding: 1.5rem;
@@ -98,45 +89,37 @@
   </header>
 
   <div class="container">
-    <div id="booking-message"></div>
-
     <div class="lawyer-card">
       <h3>John Doe</h3>
       <p>Expert in Family Law with 10+ years of experience handling complex domestic issues and child custody cases.</p>
-      <a href="?lawyer=John%20Doe" class="btn">Book Now</a>
+      <button class="btn book-btn" data-lawyer="John Doe">Book Now</button>
     </div>
 
     <div class="lawyer-card">
       <h3>Jane Smith</h3>
       <p>Corporate law specialist focused on business contracts, mergers, and compliance for startups and enterprises.</p>
-      <a href="?lawyer=Jane%20Smith" class="btn">Book Now</a>
+      <button class="btn book-btn" data-lawyer="Jane Smith">Book Now</button>
     </div>
 
     <div class="lawyer-card">
       <h3>Rahul Sharma</h3>
       <p>Criminal defense attorney skilled in trial advocacy and representing clients in complex criminal matters.</p>
-      <a href="?lawyer=Rahul%20Sharma" class="btn">Book Now</a>
+      <button class="btn book-btn" data-lawyer="Rahul Sharma">Book Now</button>
     </div>
-
-    <button id="show-form" class="btn">Book Appointment</button>
 
     <div id="booking-form">
       <h2>Book an Appointment</h2>
-      <form>
+      <form id="appointment-form">
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
 
         <label for="lawyer">Select Lawyer:</label>
-        <select id="lawyer" name="lawyer">
-          <option value="John Doe">John Doe</option>
-          <option value="Jane Smith">Jane Smith</option>
-          <option value="Rahul Sharma">Rahul Sharma</option>
-        </select>
+        <input type="text" id="lawyer" name="lawyer" readonly>
 
         <label for="date">Preferred Date:</label>
         <input type="date" id="date" name="date" required>
 
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" class="btn">Confirm Booking</button>
       </form>
     </div>
   </div>
@@ -146,19 +129,24 @@
   </footer>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const lawyerName = params.get("lawyer");
+    const bookButtons = document.querySelectorAll('.book-btn');
+    const formContainer = document.getElementById('booking-form');
+    const lawyerInput = document.getElementById('lawyer');
 
-    if (lawyerName) {
-      document.getElementById("booking-message").innerHTML =
-        `<div class="booking-header">Booking for <strong>${decodeURIComponent(lawyerName)}</strong></div>`;
-      document.getElementById("booking-form").style.display = "block";
-      document.getElementById("lawyer").value = decodeURIComponent(lawyerName);
-    }
+    bookButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const lawyerName = button.getAttribute('data-lawyer');
+        lawyerInput.value = lawyerName;
+        formContainer.scrollIntoView({ behavior: "smooth" });
+        formContainer.style.display = 'block';
+      });
+    });
 
-    document.getElementById("show-form").addEventListener("click", function () {
-      const form = document.getElementById("booking-form");
-      form.style.display = "block";
+    document.getElementById("appointment-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Booking confirmed for " + lawyerInput.value + "!");
+      formContainer.style.display = "none";
+      this.reset();
     });
   </script>
 
