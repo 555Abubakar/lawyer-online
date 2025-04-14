@@ -4,7 +4,7 @@ function displayLawyers(list) {
     listContainer.innerHTML = "<p>No lawyers found.</p>";
     return;
   }
-  list.forEach((lawyer, index) => {
+  list.forEach(lawyer => {
     const card = document.createElement("div");
     card.className = "lawyer-card";
     card.innerHTML = `
@@ -15,31 +15,14 @@ function displayLawyers(list) {
       <p><strong>Experience:</strong> ${lawyer.experience}</p>
       <p><strong>Rating:</strong> ⭐ ${lawyer.rating}</p>
       <p><strong>Details:</strong> ${lawyer.details}</p>
-      <button class="book-btn" data-index="${index}">Book Appointment</button>
+      <button class="book-btn">Book Appointment</button>
     `;
     listContainer.appendChild(card);
-  });
 
-  // Add event listeners to all "Book Appointment" buttons
-  const bookButtons = document.querySelectorAll(".book-btn");
-  bookButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
-      const index = e.target.getAttribute("data-index");
-      const selectedLawyer = list[index];
-
-      // Option 1: Store selected lawyer in localStorage
-      localStorage.setItem("selectedLawyer", JSON.stringify(selectedLawyer));
-
-      // Redirect to booking page
+    const bookBtn = card.querySelector(".book-btn");
+    bookBtn.addEventListener("click", () => {
+      localStorage.setItem("selectedLawyer", JSON.stringify(lawyer));
       window.location.href = "booking.html";
     });
   });
-  document.addEventListener("click", function (e) {
-  if (e.target && e.target.tagName === "BUTTON" && e.target.textContent === "Book Appointment") {
-    const card = e.target.closest(".lawyer-card");
-    const lawyerName = card.querySelector("h3").textContent;
-    window.location.href = `booking.html?lawyer=${encodeURIComponent(lawyerName)}`;
-  }
-});
-
 }
