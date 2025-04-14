@@ -34,4 +34,12 @@ function displayLawyers(list) {
       window.location.href = "booking.html";
     });
   });
+  document.addEventListener("click", function (e) {
+  if (e.target && e.target.tagName === "BUTTON" && e.target.textContent === "Book Appointment") {
+    const card = e.target.closest(".lawyer-card");
+    const lawyerName = card.querySelector("h3").textContent;
+    window.location.href = `booking.html?lawyer=${encodeURIComponent(lawyerName)}`;
+  }
+});
+
 }
