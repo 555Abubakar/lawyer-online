@@ -184,6 +184,9 @@
       this.reset();
     });
   </script>
+const params = new URLSearchParams(window.location.search);
+const lawyer = params.get("lawyer");
+console.log("Selected Lawyer:", lawyer);
 
 </body>
 </html>
