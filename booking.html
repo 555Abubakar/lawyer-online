@@ -18,6 +18,24 @@
       text-align: center;
     }
 
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #343a40;
+      padding: 1rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #0d6efd;
+    }
+
     .container {
       max-width: 900px;
       margin: 2rem auto;
@@ -88,6 +106,13 @@
     <p>Select a professional to help with your legal needs</p>
   </header>
 
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Find Lawyer</a>
+    <a href="#">Profile</a>
+  </nav>
+
   <div class="container">
     <div class="lawyer-card">
       <h3>John Doe</h3>
@@ -107,13 +132,14 @@
       <button class="btn book-btn" data-lawyer="Rahul Sharma">Book Now</button>
     </div>
 
+    <!-- Booking Form -->
     <div id="booking-form">
       <h2>Book an Appointment</h2>
       <form id="appointment-form">
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
 
-        <label for="lawyer">Select Lawyer:</label>
+        <label for="lawyer">Selected Lawyer:</label>
         <input type="text" id="lawyer" name="lawyer" readonly>
 
         <label for="date">Preferred Date:</label>
@@ -133,6 +159,7 @@
     const formContainer = document.getElementById('booking-form');
     const lawyerInput = document.getElementById('lawyer');
 
+    // Open the booking form when 'Book Now' is clicked
     bookButtons.forEach(button => {
       button.addEventListener('click', () => {
         const lawyerName = button.getAttribute('data-lawyer');
@@ -142,10 +169,20 @@
       });
     });
 
+    // Handle the booking form submission
     document.getElementById("appointment-form").addEventListener("submit", function(event) {
       event.preventDefault();
-      alert("Booking confirmed for " + lawyerInput.value + "!");
+      const name = document.getElementById("name").value;
+      const lawyerName = lawyerInput.value;
+      const date = document.getElementById("date").value;
+
+      // Simple confirmation message
+      alert(`Booking confirmed!\n\nName: ${name}\nLawyer: ${lawyerName}\nDate: ${date}`);
+
+      // Hide the form after booking
       formContainer.style.display = "none";
+
+      // Optionally, reset the form fields
       this.reset();
     });
   </script>
