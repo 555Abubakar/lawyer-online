@@ -59,6 +59,15 @@
       background-color: #343a40;
       color: white;
     }
+
+    .booking-header {
+      background-color: #fff3cd;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid #ffc107;
+      border-radius: 8px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -69,36 +78,40 @@
   </header>
 
   <div class="container">
+    <div id="booking-message"></div>
+
     <div class="lawyer-card">
       <h3>John Doe</h3>
       <p>Expert in Family Law with 10+ years of experience handling complex domestic issues and child custody cases.</p>
-      <a href="booking.html" class="btn">Book Now</a>
+      <a href="booking.html?lawyer=John%20Doe" class="btn">Book Now</a>
     </div>
 
     <div class="lawyer-card">
       <h3>Jane Smith</h3>
       <p>Corporate law specialist focused on business contracts, mergers, and compliance for startups and enterprises.</p>
-      <a href="booking.html" class="btn">Book Now</a>
+      <a href="booking.html?lawyer=Jane%20Smith" class="btn">Book Now</a>
     </div>
 
     <div class="lawyer-card">
       <h3>Rahul Sharma</h3>
       <p>Criminal defense attorney skilled in trial advocacy and representing clients in complex criminal matters.</p>
-      <a href="booking.html" class="btn">Book Now</a>
+      <a href="booking.html?lawyer=Rahul%20Sharma" class="btn">Book Now</a>
     </div>
+
+    <a href="booking.html" class="btn">Book Appointment</a>
   </div>
 
   <footer>
     © 2025 LegalConnect. All rights reserved.
   </footer>
-  <a href="booking.html" class="btn">Book Appointment</a>
+
   <script>
-  const params = new URLSearchParams(window.location.search);
-  const lawyerName = params.get("lawyer");
-  if (lawyerName) {
-    document.body.insertAdjacentHTML("afterbegin", `<h2>Booking for ${lawyerName}</h2>`);
-  }
-</script>
+    const params = new URLSearchParams(window.location.search);
+    const lawyerName = params.get("lawyer");
+    if (lawyerName) {
+      document.getElementById("booking-message").innerHTML = `<div class="booking-header">Booking for <strong>${decodeURIComponent(lawyerName)}</strong></div>`;
+    }
+  </script>
 
 </body>
 </html>
