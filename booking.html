@@ -172,27 +172,23 @@
     });
 
     // Handle the booking form submission
-    document.getElementById("appointment-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-      const name = document.getElementById("name").value;
-      const lawyerName = lawyerInput.value;
-      const date = document.getElementById("date").value;
+    // Handle the booking form submission
+document.getElementById("appointment-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const lawyerName = document.getElementById("lawyer").value;
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const casedetails = document.getElementById("casedetails").value;
 
-      // Simple confirmation message
-      alert(`Booking confirmed!\n\nName: ${name}\nLawyer: ${lawyerName}\nDate: ${date}`);
+  alert(`✅ Booking Confirmed!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nLawyer: ${lawyerName}\nDate: ${date}\nTime: ${time}\nReason: ${reason}`);
 
-      // Hide the form after booking
-      formContainer.style.display = "none";
+  formContainer.style.display = "none";
+  this.reset();
+});
 
-      // Optionally, reset the form fields
-      this.reset();
-    });
-
-    // Optional: Load selected lawyer from localStorage on page load
-    const lawyer = JSON.parse(localStorage.getItem("selectedLawyer"));
-    if (lawyer) {
-      document.getElementById("lawyer").value = lawyer.name;
-    }
   </script>
 
 </body>
