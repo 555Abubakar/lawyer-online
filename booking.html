@@ -3,149 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Find a Lawyer - LegalConnect</title>
+  <title>Book a Lawyer - LegalConnect</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
-      background-color: #f8f9fa;
+      padding: 0;
     }
 
     header {
       background-color: #0d6efd;
       color: white;
-      padding: 1rem 2rem;
       text-align: center;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #343a40;
       padding: 1rem;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      color: #0d6efd;
     }
 
     .container {
-      max-width: 900px;
+      max-width: 600px;
       margin: 2rem auto;
-      padding: 1rem;
-    }
-
-    .lawyer-card {
-      background-color: white;
-      margin-bottom: 1.5rem;
-      padding: 1.5rem;
+      background: white;
+      padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
 
-    .lawyer-card h3 {
-      margin: 0 0 0.5rem;
+    h2 {
+      text-align: center;
       color: #0d6efd;
     }
 
-    .btn {
-      display: inline-block;
-      margin-top: 1rem;
-      background-color: #0d6efd;
-      color: white;
-      padding: 0.8rem 1.2rem;
-      text-decoration: none;
-      border-radius: 6px;
+    label {
       font-weight: bold;
-      cursor: pointer;
-      border: none;
     }
 
-    .btn:hover {
-      background-color: #084cc0;
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 0.5rem 0 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #0947b9;
+    }
+
+    #confirmation {
+      background-color: #e9ffe9;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #a3d9a5;
+      margin-top: 2rem;
+      display: none;
     }
 
     footer {
       text-align: center;
       padding: 1rem;
-      margin-top: 2rem;
       background-color: #343a40;
       color: white;
-    }
-
-    #booking-form {
-      background-color: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      display: none;
       margin-top: 2rem;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Find a Lawyer</h1>
-    <p>Select a professional to help with your legal needs</p>
+    <h1>Book a Lawyer</h1>
+    <p>Fill out the form to confirm your appointment</p>
   </header>
 
-  <!-- Navigation Bar -->
-  <nav>
-  <a href="lawyer.html">Find Lawyer</a>
-  </nav>
-
   <div class="container">
-    <div class="lawyer-card">
-      <h3>John Doe</h3>
-      <p>Expert in Family Law with 10+ years of experience handling complex domestic issues and child custody cases.</p>
-      <button class="btn book-btn" data-lawyer="John Doe">Book Now</button>
-    </div>
+    <h2>Appointment Form</h2>
+    <form id="bookingForm">
+      <label for="name">Your Full Name:</label>
+      <input type="text" id="name" required>
 
-    <div class="lawyer-card">
-      <h3>Jane Smith</h3>
-      <p>Corporate law specialist focused on business contracts, mergers, and compliance for startups and enterprises.</p>
-      <button class="btn book-btn" data-lawyer="Jane Smith">Book Now</button>
-    </div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
 
-    <div class="lawyer-card">
-      <h3>Rahul Sharma</h3>
-      <p>Criminal defense attorney skilled in trial advocacy and representing clients in complex criminal matters.</p>
-      <button class="btn book-btn" data-lawyer="Rahul Sharma">Book Now</button>
-    </div>
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" required>
 
-    <!-- Booking Form -->
-    <div id="booking-form">
-      <h2>Book an Appointment</h2>
-      <form id="appointment-form">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
+      <label for="lawyer">Choose a Lawyer:</label>
+      <select id="lawyer" required>
+        <option value="">-- Select --</option>
+        <option value="John Doe">John Doe - Family Law</option>
+        <option value="Jane Smith">Jane Smith - Corporate Law</option>
+        <option value="Rahul Sharma">Rahul Sharma - Criminal Defense</option>
+      </select>
 
-        <label for="lawyer">Selected Lawyer:</label>
-        <input type="text" id="lawyer" name="lawyer" readonly>
+      <label for="date">Preferred Date:</label>
+      <input type="date" id="date" required>
 
-        <label for="date">Preferred Date:</label>
-        <input type="date" id="date" name="date" required>
+      <label for="time">Preferred Time:</label>
+      <input type="time" id="time" required>
 
-        <button type="submit" class="btn">Confirm Booking</button>
-      </form>
-    </div>
+      <label for="reason">Reason for Appointment:</label>
+      <textarea id="reason" rows="3" required></textarea>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+
+    <!-- Confirmation Section -->
+    <div id="confirmation"></div>
   </div>
 
   <footer>
@@ -153,42 +126,34 @@
   </footer>
 
   <script>
-    const bookButtons = document.querySelectorAll('.book-btn');
-    const formContainer = document.getElementById('booking-form');
-    const lawyerInput = document.getElementById('lawyer');
+    const form = document.getElementById("bookingForm");
+    const confirmation = document.getElementById("confirmation");
 
-    // Open the booking form when 'Book Now' is clicked
-    bookButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const lawyerName = button.getAttribute('data-lawyer');
-        lawyerInput.value = lawyerName;
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
 
-        // Save selected lawyer in localStorage
-        localStorage.setItem("selectedLawyer", JSON.stringify({ name: lawyerName }));
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const lawyer = document.getElementById("lawyer").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const reason = document.getElementById("reason").value;
 
-        formContainer.scrollIntoView({ behavior: "smooth" });
-        formContainer.style.display = 'block';
-      });
+      confirmation.innerHTML = `
+        <h3>✅ Booking Confirmed!</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Lawyer:</strong> ${lawyer}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Time:</strong> ${time}</p>
+        <p><strong>Reason:</strong> ${reason}</p>
+      `;
+
+      confirmation.style.display = "block";
+      form.reset();
     });
-
-    // Handle the booking form submission
-    // Handle the booking form submission
-document.getElementById("appointment-form").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
-  const lawyerName = document.getElementById("lawyer").value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
-  const casedetails = document.getElementById("casedetails").value;
-
-  alert(`✅ Booking Confirmed!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nLawyer: ${lawyerName}\nDate: ${date}\nTime: ${time}\nReason: ${reason}`);
-
-  formContainer.style.display = "none";
-  this.reset();
-});
-
   </script>
 
 </body>
